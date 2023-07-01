@@ -4,7 +4,7 @@
   "description": "CRUD API using in-memory database underneath",
   "main": "index.js",
   "scripts": {
-    "start:dev": "ts-node-dev src/index.ts",
+    "start:dev": "ts-node-dev --watch src src/index.ts",
     "start:prod": "npm run build && node ./dist/bundle.js",
     "build": "webpack --node-env=production",
     "lint": "eslint \"src/**/*.ts\" --fix",
