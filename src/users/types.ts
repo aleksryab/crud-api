@@ -6,3 +6,5 @@ export interface User {
 }
 
 export type UsersList = User[];
+
+export type UserBody = Omit<User, 'id'>;

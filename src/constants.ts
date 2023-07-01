@@ -1,1 +1,1 @@
-export const usersRouteRegExp = /^\/api\/users(\/\w*\/?)?$/;
+export const usersRouteRegExp = /^\/api\/users(\/[^\/]*\/?)?$/;
