@@ -1,9 +1,10 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import { UsersList } from './types';
 import getAllUsers from './getAllUsers';
-import notAllowedMethod from './notAllowedMethod';
 import getUserById from './getUserById';
 import createUser from './createUser';
+import updateUser from './updateUser';
+import notAllowedMethod from './notAllowedMethod';
 
 const users: UsersList = [
   { id: '111', username: 'John', age: 11, hobbies: ['tv', 'games'] },
@@ -27,6 +28,9 @@ const usersApi = (req: IncomingMessage, res: ServerResponse) => {
       break;
     case 'POST':
       createUser(users, req, res);
+      break;
+    case 'PUT':
+      updateUser(users, userId, req, res);
       break;
 
     default:

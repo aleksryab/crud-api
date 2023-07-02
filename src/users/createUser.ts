@@ -1,7 +1,7 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import { v4 as uuidv4 } from 'uuid';
 import { UsersList } from './types';
-import { parseUserBody, validateUserBody } from './utils';
+import { parseUserBody, validateCreateUserBody } from './utils';
 
 const createUser = async (
   users: UsersList,
@@ -10,9 +10,9 @@ const createUser = async (
 ) => {
   try {
     const body = await parseUserBody(req);
-    validateUserBody(body);
+    const validBody = validateCreateUserBody(body);
 
-    const { username, age, hobbies } = body;
+    const { username, age, hobbies } = validBody;
     const newUser = { id: uuidv4(), username, age, hobbies };
     users.push(newUser);
 
