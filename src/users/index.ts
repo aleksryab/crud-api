@@ -4,19 +4,14 @@ import getAllUsers from './getAllUsers';
 import getUserById from './getUserById';
 import createUser from './createUser';
 import updateUser from './updateUser';
+import deleteUser from './deleteUser';
 import notAllowedMethod from './notAllowedMethod';
 
-const users: UsersList = [
-  { id: '111', username: 'John', age: 11, hobbies: ['tv', 'games'] },
-  { id: '222', username: 'Bob', age: 22, hobbies: ['games'] },
-  { id: '333', username: 'Alex', age: 33, hobbies: ['tv', 'games', 'books'] },
-];
+const users: UsersList = [];
 
 const usersApi = (req: IncomingMessage, res: ServerResponse) => {
   res.setHeader('Content-Type', 'application/json');
-  console.log(req.url);
   const userId = req.url?.split('/')[3];
-  console.log(userId);
 
   switch (req.method) {
     case 'GET':
@@ -31,6 +26,9 @@ const usersApi = (req: IncomingMessage, res: ServerResponse) => {
       break;
     case 'PUT':
       updateUser(users, userId, req, res);
+      break;
+    case 'DELETE':
+      deleteUser(users, userId, res);
       break;
 
     default:
