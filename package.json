@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start:dev": "ts-node-dev --watch src src/index.ts",
+    "start:multi": "cross-env BALANCER_MODE=multi npm run start:dev",
     "start:prod": "npm run build && node ./dist/bundle.js",
+    "start:prod:multi": "npm run build && cross-env BALANCER_MODE=multi node ./dist/bundle.js",
     "build": "webpack --node-env=production",
     "lint": "eslint \"src/**/*.ts\" --fix",
     "test": "test"
@@ -33,6 +35,7 @@
     "@types/uuid": "^9.0.2",
     "@typescript-eslint/eslint-plugin": "^5.60.1",
     "@typescript-eslint/parser": "^5.60.1",
+    "cross-env": "^7.0.3",
     "eslint": "^8.43.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",

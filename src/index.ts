@@ -1,24 +1,46 @@
-import { createServer } from 'node:http';
-import usersApi from './users';
-import { notFound, serverError } from './errors';
-import { usersRouteRegExp } from './constants';
+import { availableParallelism } from 'node:os';
+import cluster from 'node:cluster';
+import { server, balancerServer, workerServer } from './servers';
 import 'dotenv/config';
 
 const PORT = process.env.PORT || 4000;
 
-const server = createServer((req, res) => {
-  req.on('error', () => serverError(res));
+const isBalancer = process.env.BALANCER_MODE === 'multi';
+const numCPUs = availableParallelism();
 
-  if (usersRouteRegExp.test(req.url ?? '')) {
-    usersApi(req, res);
-  } else {
-    notFound(res);
+if (cluster.isPrimary && isBalancer) {
+  let currentPort = Number(PORT);
+
+  for (let i = 0; i < numCPUs; i++) {
+    cluster.fork({ clusterPort: currentPort });
+    currentPort += 1;
   }
-});
 
-server.listen(PORT, () => {
-  console.log(
-    '\x1b[36m%s\x1b[0m',
-    `Server running on http://localhost:${PORT}/`,
+  cluster.on('fork', (worker) => {
+    worker.on('message', (msg) => {
+      const workers = cluster.workers;
+      if (workers) {
+        Object.keys(workers).forEach((id) => workers[id]?.send(msg));
+      }
+    });
+  });
+
+  cluster.on('exit', (worker) => {
+    console.log(`worker ${worker.process.pid} died`);
+  });
+} else if (isBalancer) {
+  const workerPort = process.env.clusterPort;
+
+  if (workerPort === PORT) {
+    balancerServer(Number(PORT), numCPUs - 1);
+  } else {
+    if (workerPort) workerServer(workerPort);
+  }
+} else {
+  server.listen(PORT, () =>
+    console.log(
+      '\x1b[36m%s\x1b[0m',
+      `Server started on http://localhost:${PORT}/`,
+    ),
   );
-});
+}

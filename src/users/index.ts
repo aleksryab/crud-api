@@ -1,15 +1,17 @@
 import { IncomingMessage, ServerResponse } from 'http';
-import { UsersList } from './types';
 import getAllUsers from './getAllUsers';
 import getUserById from './getUserById';
 import createUser from './createUser';
 import updateUser from './updateUser';
 import deleteUser from './deleteUser';
 import notAllowedMethod from './notAllowedMethod';
+import { UsersList } from './types';
 
-const users: UsersList = [];
-
-const usersApi = (req: IncomingMessage, res: ServerResponse) => {
+const usersApi = async (
+  users: UsersList,
+  req: IncomingMessage,
+  res: ServerResponse,
+) => {
   res.setHeader('Content-Type', 'application/json');
   const userId = req.url?.split('/')[3];
 
@@ -22,10 +24,10 @@ const usersApi = (req: IncomingMessage, res: ServerResponse) => {
       }
       break;
     case 'POST':
-      createUser(users, req, res);
+      await createUser(users, req, res);
       break;
     case 'PUT':
-      updateUser(users, userId, req, res);
+      await updateUser(users, userId, req, res);
       break;
     case 'DELETE':
       deleteUser(users, userId, res);
