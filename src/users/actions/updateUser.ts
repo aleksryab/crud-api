@@ -1,7 +1,7 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import { validate as uuidValidate } from 'uuid';
-import { UsersList } from './types';
-import { parseUserBody, validateUpdateUserBody } from './utils';
+import { UsersList } from '../types';
+import { parseUserBody, validateUpdateUserBody } from '../utils';
 
 const updateUser = async (
   users: UsersList,
@@ -22,11 +22,10 @@ const updateUser = async (
     try {
       const body = await parseUserBody(req);
       const validBody = validateUpdateUserBody(body);
-      const updatedUser = { ...userForUpdate, ...validBody };
 
+      const updatedUser = { ...userForUpdate, ...validBody };
       users[userIndex] = updatedUser;
 
-      console.log(updatedUser);
       res.statusCode = 200;
       res.end(JSON.stringify(updatedUser));
     } catch (err) {

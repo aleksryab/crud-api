@@ -1,11 +1,14 @@
 import { IncomingMessage, ServerResponse } from 'http';
-import getAllUsers from './getAllUsers';
-import getUserById from './getUserById';
-import createUser from './createUser';
-import updateUser from './updateUser';
-import deleteUser from './deleteUser';
-import notAllowedMethod from './notAllowedMethod';
+
 import { UsersList } from './types';
+import {
+  createUser,
+  getAllUsers,
+  getUserById,
+  updateUser,
+  deleteUser,
+  notAllowedMethod,
+} from './actions';
 
 const usersApi = async (
   users: UsersList,

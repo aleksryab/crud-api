@@ -1,5 +1,4 @@
-import { IncomingMessage, ServerResponse } from 'http';
-import { validate as uuidValidate } from 'uuid';
+import { IncomingMessage } from 'http';
 import { UserBody } from './types';
 
 export const parseUserBody = async (
@@ -61,17 +60,4 @@ export const validateUpdateUserBody = (body: Partial<UserBody>) => {
   }, {});
 
   return validBody;
-};
-
-export const validateUserId = (
-  userId: string,
-  res: ServerResponse,
-  callback: () => void,
-) => {
-  if (uuidValidate(userId)) {
-    callback();
-  } else {
-    res.statusCode = 400;
-    res.end(JSON.stringify({ message: `Invalid user id: ${userId}` }));
-  }
 };

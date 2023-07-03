@@ -1,6 +1,6 @@
 import { ServerResponse } from 'http';
 import { validate as uuidValidate } from 'uuid';
-import { UsersList } from './types';
+import { UsersList } from '../types';
 
 const deleteUser = (
   users: UsersList,
@@ -18,7 +18,7 @@ const deleteUser = (
   if (userIndex > -1) {
     users.splice(userIndex, 1);
     res.statusCode = 204;
-    res.end(JSON.stringify({ message: `User with id ${id} deleted` }));
+    res.end();
     return;
   }
 

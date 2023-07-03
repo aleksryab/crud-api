@@ -1,6 +1,6 @@
 import { ServerResponse } from 'http';
 import { validate as uuidValidate } from 'uuid';
-import { UsersList } from './types';
+import { UsersList } from '../types';
 
 const getUserById = (users: UsersList, id: string, res: ServerResponse) => {
   if (!uuidValidate(id)) {

@@ -1,7 +1,7 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import { v4 as uuidv4 } from 'uuid';
-import { UsersList } from './types';
-import { parseUserBody, validateCreateUserBody } from './utils';
+import { UsersList } from '../types';
+import { parseUserBody, validateCreateUserBody } from '../utils';
 
 const createUser = async (
   users: UsersList,

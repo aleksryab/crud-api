@@ -1,5 +1,5 @@
 import { ServerResponse } from 'http';
-import { UsersList } from './types';
+import { UsersList } from '../types';
 
 const getAllUsers = (users: UsersList, res: ServerResponse) => {
   res.statusCode = 200;
