@@ -53,3 +53,9 @@ npm run start:prod
 npm run start:prod:multi
 
 ```
+
+## Testing
+
+```bash
+npm run test
+```
