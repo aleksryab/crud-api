@@ -12,7 +12,7 @@ export const parseUserBody = async (
       try {
         resolve(JSON.parse(body));
       } catch {
-        reject(new Error('Invalid JSON for body'));
+        reject(new Error('Bad Request: Invalid JSON'));
       }
     });
   });
