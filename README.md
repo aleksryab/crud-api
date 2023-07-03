@@ -3,6 +3,7 @@
 ## Description
 
 Simple CRUD API using in-memory database underneath.
+
 Application can work in horizontal scaling mode, that starts multiple instances of application using the Node.js `Cluster` API (equal to the number of available parallelism - 1 on the host machine, each listening on port PORT + n) with a **load balancer** that distributes requests across them (using Round-robin algorithm).
 
 ### Endpoint `api/users`:
